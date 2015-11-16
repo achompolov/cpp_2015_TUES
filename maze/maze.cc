@@ -16,10 +16,36 @@ class Cell {
 	bool visited_;
 	unsigned int walls_;
 
+	Cell* up_;
+	Cell* down_;
+	Cell* left_;
+	Cell* right_;
+
+	Cell& set_up(Cell* up) {
+		up_ = up;
+		return *this;
+	}
+
+	Cell& set_down(Cell* down) {
+		down_ = down;
+		return *this;
+	}
+
+	Cell& set_left(Cell* left) {
+		left_ = left;
+		return *this;
+	}
+
+	Cell& set_right(Cell* right) {
+		right_ = right;
+		return *this;
+	}
+
 public:
 	Cell(int row=-1, int col=-1) 
 	: row_(row), col_(col), visited_(false),
-	  walls_(LEFT | RIGHT | UP | DOWN)
+	  walls_(LEFT | RIGHT | UP | DOWN),
+	  up_(0), down_(0), left_(0), right_(0)
 	{} 
 
 	bool visited() const {
@@ -47,7 +73,21 @@ public:
 		cout << 0 << -step << " " << (has_wall(LEFT)?"rlineto":"rmoveto") << endl;
 	}
 
+	Cell* up() const {
+		return up_;
+	}
 
+	Cell* down() const {
+		return down_;
+	}
+
+	Cell* left() const {
+		return left_;
+	}
+
+	Cell* right() const {
+		return right_;
+	}
 };
 
 class Board {
@@ -63,6 +103,16 @@ public:
 		for(int i=0; i<rows_; ++i) {
 			for(int j=0; j<cols_; ++j) {
 				cells_.push_back(Cell(i, j));
+			}
+		}
+		
+		for(int i=0; i <rows_; ++i) {
+			for(int j=0; j<cols_; ++j) {
+				Cell& c=at(i, j);
+				if(i < rows_-1) {c.set_up(&at(i+1, j));}
+				if(i > 0)       {c.set_down(&at(i-1, j));}
+				if(j > 0)       {c.set_left(&at(i, j-1));}
+				if(j < cols_-1) {c.set_right(&at(i, j+1));}
 			}
 		}
 	}
@@ -102,6 +152,12 @@ int main() {
 	Board b(5,5);
 	b.draw();
 
+	Cell& c = b.at(2,2);
+	c.drill(UP);
+	Cell* up = c.up();
+	up -> drill(DOWN);
+		
+	b.draw();
 
 	return 0;
 }
