@@ -132,6 +132,8 @@ public:
 		for (vector<Cell>::const_iterator it = cells_.begin(); it!=cells_.end(); ++it) {
 			(*it).draw();
 		}
+		cout << "stroke" << endl;
+		cout << "showpage" << endl;
 	}
 
 };
@@ -150,13 +152,13 @@ int main() {
 	*/
 
 	Board b(5,5);
-	b.draw();
+	//b.draw();
 
 	Cell& c = b.at(2,2);
 	c.drill(UP);
 	Cell* up = c.up();
 	up -> drill(DOWN);
-		
+	
 	b.draw();
 
 	return 0;
