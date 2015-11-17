@@ -66,11 +66,11 @@ public:
 	}	
 
 	void draw(int step=20) const {
-		cout << col_*step << " " << row_*step << " " << " moveto" << endl;
+		cout << col_*step << " " << row_*step << " " << "moveto" << endl;
 		cout << step << " " << 0 << " " << (has_wall(DOWN)?"rlineto":"rmoveto") << endl;
 		cout << 0 << " " << step << " " << (has_wall(RIGHT)?"rlineto":"rmoveto") << endl;
 		cout << -step << " " << 0 << " " << (has_wall(UP)?"rlineto":"rmoveto") << endl;
-		cout << 0 << -step << " " << (has_wall(LEFT)?"rlineto":"rmoveto") << endl;
+		cout << 0 << " " << -step << " " << (has_wall(LEFT)?"rlineto":"rmoveto") << endl;
 	}
 
 	Cell* up() const {
@@ -152,7 +152,7 @@ int main() {
 	*/
 
 	Board b(5,5);
-	//b.draw();
+	b.draw();
 
 	Cell& c = b.at(2,2);
 	c.drill(UP);
